@@ -1,1 +1,1 @@
-# Live-Templates
+# Live-Templates for Magento 2
