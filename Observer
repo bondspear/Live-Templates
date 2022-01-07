@@ -1,0 +1,17 @@
+<?php
+
+namespace VendorName\ModuleName\Observer;
+
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
+
+class ClassName implements ObserverInterface
+{
+    public function execute(Observer $observer)
+    {
+
+        //some code here...
+
+        return $this;
+    }
+}
