@@ -1,0 +1,26 @@
+namespace VendorName\ModuleName\Plugin;
+
+use \SomeClass\Who\We\Are\Intersected;
+
+class PluginName
+{
+    public function beforeMethod(Intersected $subject, $methodParam1, $methodParam2)
+    {
+        $methodParam1 *= $methodParam1;
+
+        return [
+            $methodParam1,
+            $methodParam2
+        ];
+    }
+
+//    public function aroundMethod(Intersected $subject, callable $proceed, $param1, $param2)
+//    {
+//        return $proceed($param1, $param2);
+//    }
+
+//    public function afterMethod(Intersected $subject, $result, $param1, $param2)
+//    {
+//        return $result;
+//    }
+}
