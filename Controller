@@ -1,4 +1,3 @@
-<?php
 namespace VendorName\ModuleName\Controller\Index;
 
 use Magento\Backend\App\Action\Context;
