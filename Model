@@ -1,0 +1,20 @@
+namespace VendorName\ModuleName\Model;
+class YouModelName extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+{
+    protected function _construct()
+    {
+        $this->_init('VendorName\ModuleName\Model\ResourceModel\YouModelName');
+    }
+
+    public function getIdentities()
+    {
+        return [$this->getId()];
+    }
+
+    public function getDefaultValues()
+    {
+        $values = [];
+
+        return $values;
+    }
+}
