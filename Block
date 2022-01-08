@@ -1,6 +1,12 @@
 namespace VendorName\ModueName\Block;
 
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+
 class BlockName extends \Magento\Framework\View\Element\Template
 {
-    
+    public function __construct(Context $context, array $data = [])
+    {
+        parent::__construct($context, $data);
+    }
 }
