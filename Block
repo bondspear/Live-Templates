@@ -1,0 +1,6 @@
+namespace VendorName\ModueName\Block;
+
+class BlockName extends \Magento\Framework\View\Element\Template
+{
+    
+}
