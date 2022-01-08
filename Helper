@@ -1,0 +1,8 @@
+namespace VendorName\MaduleName\Helper;
+
+use Magento\Framework\App\Helper\AbstractHelper;
+
+class HelperName extends AbstractHelper
+{
+    //code here
+}
