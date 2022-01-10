@@ -1,5 +1,3 @@
-<?php
-
 namespace VendorName\ModuleName\Observer;
 
 use Magento\Framework\Event\Observer;
