@@ -1,0 +1,149 @@
+namespace VendorName\ModuleName\Model;
+
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\StateException;
+use VendorName\ModuleName\Api\Data\ModelClassNameInterface;
+use VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterface;
+use VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterfaceFactory;
+use VendorName\ModuleName\Api\ModelClassNameRepositoryInterface;
+
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName as ModelClassNameResource;
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName\Collection as ModelClassNameCollection;
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName\CollectionFactory as ModelClassNameCollectionFactory;
+
+/**
+ * Class ModelClassNameRepository
+ * @package VendorName\ModuleName\Model
+ */
+class ModelClassNameRepository implements ModelClassNameRepositoryInterface
+{
+    /**
+     * @var array
+     */
+    private $registry = [];
+
+    /**
+     * @var ModelClassNameResource
+     */
+    private $modelClassNameResource;
+
+    /**
+     * @var ModelClassNameFactory
+     */
+    private $modelClassNameFactory;
+
+    /**
+     * @var ModelClassNameCollectionFactory
+     */
+    private $modelClassNameCollectionFactory;
+
+    /**
+     * @var ModelClassNameSearchResultInterfaceFactory
+     */
+    private $modelClassNameSearchResultFactory;
+
+    /**
+     * @param ModelClassNameResource $modelClassNameResource
+     * @param ModelClassNameFactory $modelClassNameFactory
+     * @param ModelClassNameCollectionFactory $modelClassNameCollectionFactory
+     * @param ModelClassNameSearchResultInterfaceFactory $modelClassNameSearchResultFactory
+     */
+    public function __construct(
+        ModelClassNameResource $modelClassNameResource,
+        ModelClassNameFactory $modelClassNameFactory,
+        ModelClassNameCollectionFactory $modelClassNameCollectionFactory,
+        ModelClassNameSearchResultInterfaceFactory $modelClassNameSearchResultFactory
+    ) {
+        $this->postResource = $modelClassNameResource;
+        $this->postFactory = $modelClassNameFactory;
+        $this->postCollectionFactory = $modelClassNameCollectionFactory;
+        $this->postSearchResultFactory = $modelClassNameSearchResultFactory;
+    }
+
+    /**
+     * @param int $id
+     * @return ModelClassNameInterface
+     * @throws NoSuchEntityException
+     */
+    public function get(int $id)
+    {
+        if (!array_key_exists($id, $this->registry)) {
+            $modelClassName = $this->postFactory->create();
+            $this->postResource->load($modelClassName, $id);
+            if (!$modelClassName->getId()) {
+                throw new NoSuchEntityException(__('Requested post does not exist'));
+            }
+            $this->registry[$id] = $modelClassName;
+        }
+
+        return $this->registry[$id];
+    }
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria)
+    {
+        /** @var ModelClassNameCollection $collection */
+        $collection = $this->postCollectionFactory->create();
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
+                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
+            }
+        }
+
+        /** @var ModelClassNameSearchResultInterface $searchResult */
+        $searchResult = $this->postSearchResultFactory->create();
+        $searchResult->setSearchCriteria($searchCriteria);
+        $searchResult->setItems($collection->getItems());
+        $searchResult->setTotalCount($collection->getSize());
+        return $searchResult;
+    }
+
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
+     * @return ModelClassNameInterface
+     * @throws StateException
+     */
+    public function save(ModelClassNameInterface $modelClassName)
+    {
+        try {
+            /** @var ModelClassName $modelClassName */
+            $this->postResource->save($modelClassName);
+            $this->registry[$modelClassName->getId()] = $this->get($modelClassName->getId());
+        } catch (\Exception $exception) {
+            throw new StateException(__('Unable to save post #%1', $modelClassName->getId()));
+        }
+        return $this->registry[$modelClassName->getId()];
+    }
+
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
+     * @return bool
+     * @throws StateException
+     */
+    public function delete(ModelClassNameInterface $modelClassName)
+    {
+        try {
+            /** @var ModelClassName $modelClassName */
+            $this->postResource->delete($modelClassName);
+            unset($this->registry[$modelClassName->getId()]);
+        } catch (\Exception $e) {
+            throw new StateException(__('Unable to remove post #%1', $modelClassName->getId()));
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id)
+    {
+        return $this->delete($this->get($id));
+    }
+}
