@@ -1,0 +1,21 @@
+namespace VendorName\ModuleName\Api\Data;
+
+use Magento\Framework\Api\SearchResultsInterface;
+
+/**
+ * Interface ModelClassNameSearchResultInterface
+ * @package VendorName\ModuleName\Api\Data
+ */
+interface ModelClassNameSearchResultInterface extends SearchResultsInterface
+{
+    /**
+     * @return \VendorName\ModuleName\Api\Data\ModelClassNameInterface[]
+     */
+    public function getItems();
+
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface[] $items
+     * @return $this
+     */
+    public function setItems(array $items);
+}
