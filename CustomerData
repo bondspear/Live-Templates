@@ -1,0 +1,28 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace VendorName\ModuleName\CustomerData;
+
+use Magento\Customer\CustomerData\SectionSourceInterface;
+
+
+/**
+ * Catalog Product Compare Widget
+ */
+class ClassName implements SectionSourceInterface
+{
+    /**
+     * @inheritdoc
+     */
+    public function getSectionData()
+    {
+        
+        return [
+            'count'        => '12',
+            'countCaption' => '12',
+            'listUrl'      => '12',
+            'items'        => '12'
+        ];
+    }
+}
