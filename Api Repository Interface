@@ -1,0 +1,42 @@
+namespace VendorName\ModuleName\Api;
+
+use Magento\Framework\Api\SearchCriteriaInterface;
+use VendorName\ModuleName\Api\Data\ClassModelNametInterface;
+
+/**
+ * Interface ClassModelNameRepositoryInterface
+ * @package VendorName\Api
+ * @api
+ */
+interface ClassModelNameRepositoryInterface
+{
+    /**
+     * @param int $id
+     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
+     */
+    public function get(int $id);
+
+    /**
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \VendorName\ModuleName\Api\Data\ClassModelNameSearchResultInterface
+     */
+    public function getList(SearchCriteriaInterface $searchCriteria);
+
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
+     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
+     */
+    public function save(ClassModelNameInterface $classModelName);
+
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
+     * @return bool
+     */
+    public function delete(ClassModelNameInterface $classModelName);
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id);
+}
