@@ -1,0 +1,30 @@
+namespace VendorName\ModuleName\Api\Data;
+
+/**
+ * Interface ModelClassNameInterface
+ * @package VendorName\ModuleName\Api\Data
+ * @api
+ */
+interface ModelClassNameInterface
+{
+    /**#@+
+     * Constants
+     * @var string
+     */
+    const ID         = 'id';
+    const SOME       = 'some';
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+    /**#@-*/
+
+    /**
+     * @return int
+     */
+    public function getId();
+
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id);
+}
