@@ -1,6 +1,17 @@
 namespace VendorName\ModuleName\Model;
-class YouModelName extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+/**
+*if we need rest we use where we get constants
+*use VendorName\ModuleName\Api\Data\ModelClassNameInterface;implements ModelClassNameInterface 
+*/
+
+use Magento\Framework\Model\AbstractModel;
+
+class YouModelName extends AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
 {
+
+    /**
+     * @inheritdoc
+     */
     protected function _construct()
     {
         $this->_init('VendorName\ModuleName\Model\ResourceModel\YouModelName');
@@ -16,5 +27,23 @@ class YouModelName extends \Magento\Framework\Model\AbstractModel implements \Ma
         $values = [];
 
         return $values;
+    }
+    
+     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->getData(ModelClassNameInterface::ID);
+    }
+
+    /**
+     * @param int $authorId
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->setData(ModelClassNameInterface::ID, $id);
+        return $this;
     }
 }
