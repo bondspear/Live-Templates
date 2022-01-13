@@ -39,4 +39,11 @@ interface ClassModelNameRepositoryInterface
      * @return bool
      */
     public function deleteById(int $id);
+    
+    /**
+     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
+     * @param int $id
+     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
+     */
+    public function updateById(ClassModelNameInterface $classModelName, int $id);
 }
