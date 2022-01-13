@@ -146,4 +146,24 @@ class ModelClassNameRepository implements ModelClassNameRepositoryInterface
     {
         return $this->delete($this->get($id));
     }
+    
+     /**
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
+     * @param int $id
+     * @return \VendorName\ModuleName\Api\Data\ModelClassNameInterface
+     */
+    public function updateById(ModelClassNameInterface $modelClassName, int $id)
+    {
+        if (!array_key_exists($id, $this->registry)) {
+            $modelClassNameModel = $this->modelClassNameFactory->create();
+            $this->modelClassNameResource->load($modelClassNameModel, $id);
+            if (!$modelClassNameModel->getId()) {
+                throw new NoSuchEntityException(__('Requested modelClassName does not exist'));
+            }
+            $this->modelClassNameResource->save($modelClassName);
+            $this->registry[$id] = $modelClassName;
+        }
+
+        return $this->registry[$id];
+    }
 }
