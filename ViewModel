@@ -1,0 +1,11 @@
+namespace VendorName\ModuleName\ViewModel;
+
+use Magento\Framework\View\Element\Block\ArgumentInterface;
+
+class ClassName implements \Magento\Framework\View\Element\Block\ArgumentInterface
+{
+    public function getTitle()
+    {
+        return 'Hello World';
+    }
+}
