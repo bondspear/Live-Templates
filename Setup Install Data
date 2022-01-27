@@ -1,0 +1,55 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace VendorName\ModuleName\Setup;
+
+use Magento\Eav\Model\Config;
+use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+
+/**
+ * Class InstallData
+ * @package Magento\TestSetupDeclarationModule3\Setup
+ */
+class InstallData implements InstallDataInterface
+{
+    /** @var EavSetupFactory*/
+    private $eavSetupFactory;
+
+    public function __construct(EavSetupFactory $eavSetupFactory, Config $eavConfig)
+    {
+        $this->eavSetupFactory = $eavSetupFactory;
+        $this->eavConfig       = $eavConfig;
+    }
+
+
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    {
+        $setup->startSetup();
+        $customerSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+
+        $customerSetup->addAttribute(\Magento\Customer\Model\Customer::ENTITY,
+            'attribute_name',
+            [
+                'type'         => 'int',
+                'label'        => 'Is Vendor?',
+                'input'        => 'select',
+                'default'      => '0',
+                "source"       => "VendorName\ModuleName\Model\Config\Source\CustomerYesNoOptions",
+                'global'       => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'required'     => false,
+                'system'       => false,
+                'visible'      => true,
+                'user_defined' => true,
+                'sort_order'   => 210,
+                'position'     => 210
+            ]);
+
+
+        $setup->endSetup();
+    }
+}
