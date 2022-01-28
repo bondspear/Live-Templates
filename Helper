@@ -1,8 +1,29 @@
-namespace VendorName\MaduleName\Helper;
+namespace  VendorName\ModuleName\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Model\ScopeInterface;
 
-class HelperName extends AbstractHelper
-{
-    //code here
+
+class HelperName extends AbstractHelper{
+
+    /**
+     * XML_PATH_SETTINGS_SOME1
+     */
+    const XML_PATH_SETTINGS_SOME1 = "section_id/group_id/field_id";
+
+    /**
+     * XML_PATH_SETTINGS_SOME2
+     */
+    const XML_PATH_SETTINGS_SOME2 = "section_id/group_id/field_id";
+
+
+    public function getSomeSettings1($storeId = null)
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_SETTINGS_SOME1, ScopeInterface::SCOPE_STORE, $storeId);
+    }
+
+    public function getSomeSettings2($storeId = null)
+    {
+        return $this->scopeConfig->getValue(self::XML_PATH_SETTINGS_SOME2, ScopeInterface::SCOPE_STORE, $storeId);
+    }
 }
