@@ -1,0 +1,63 @@
+namespace  VendorName\ModuleName\Console\Command;
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class ClassName extends Command{
+
+    /**
+     * ADD_OPTION
+     */
+    const ADD_OPTION = "add";
+
+    /**
+     * DEL_OPTION
+     */
+    const DEL_OPTION = "del";
+
+    protected function configure()
+    {
+        $this->setName('group:subject:action');
+        $this->setDescription('command description');
+        $this->addOption(
+            self::ADD_OPTION,
+            "a",
+            InputOption::VALUE_NONE,
+            "option description"
+        );
+        $this->addOption(
+            self::DEL_OPTION,
+            "d",
+            InputOption::VALUE_NONE,
+            "option description"
+        );
+
+        parent::configure();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $options = [
+            $input->getOption(self::ADD_OPTION),
+            $input->getOption(self::DEL_OPTION)
+        ];
+
+        $optionsNotSet = true;
+        foreach($options as $option){
+            if(!empty($option)) $optionsNotSet = false;
+        }
+
+        if($optionsNotSet){
+            $output->writeln('<error>set any flags [add del].</error>');
+        }else{
+            if($input->getOption(self::ADD_OPTION)){
+                $output->writeln('<info>Success add.</info>');
+            }
+            if($input->getOption(self::DEL_OPTION)){
+                $output->writeln('<info>Success del.</info>');
+            }
+        }
+    }
+}
