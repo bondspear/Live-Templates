@@ -1,0 +1,23 @@
+namespace VendorName\ModuleName\Controller\Adminhtml\Index;
+
+use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\View\Result\PageFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\App\Action;
+
+class Index extends Action
+{
+    protected $resultPageFactory;
+
+    public function __construct(Context $context, PageFactory $resultPageFactory)
+    {
+        parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
+    }
+
+    public function execute()
+    {
+        return $this->resultPageFactory->create();
+    }
+}
