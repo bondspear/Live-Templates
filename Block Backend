@@ -1,0 +1,12 @@
+namespace VendorName\ModuleName\Block\Adminhtml;
+
+use Magento\Backend\Block\Template;
+use Magento\Backend\Block\Template\Context;
+
+class BlockName extends Template
+{
+    public function __construct(Context $context, array $data = [])
+    {
+        parent::__construct($context, $data);
+    }
+}
