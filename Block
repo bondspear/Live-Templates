@@ -3,7 +3,7 @@ namespace VendorName\ModueName\Block;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
-class BlockName extends \Magento\Framework\View\Element\Template
+class BlockName extends Template
 {
     public function __construct(Context $context, array $data = [])
     {
