@@ -1,12 +1,9 @@
 namespace VendorName\ModuleName\Model;
-/**
-*if we need rest we use where we get constants
-*use VendorName\ModuleName\Api\Data\ModelClassNameInterface;implements ModelClassNameInterface 
-*/
 
+use VendorName\ModuleName\Api\Data\YouModelNameInterface;
 use Magento\Framework\Model\AbstractModel;
 
-class YouModelName extends AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+class YouModelName extends AbstractModel implements YouModelNameInterface
 {
 
     /**
@@ -34,7 +31,7 @@ class YouModelName extends AbstractModel implements \Magento\Framework\DataObjec
      */
     public function getId()
     {
-        return $this->getData(ModelClassNameInterface::ID);
+        return $this->getData(YouModelNameInterface::ID);
     }
 
     /**
