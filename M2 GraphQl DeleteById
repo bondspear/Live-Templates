@@ -1,0 +1,28 @@
+namespace VendorName\ModuleName\Service\GraphQl;
+
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\GraphQl\Query\Resolver\Value;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use VendorName\ModuleName\Model\ClassModelNameRepository;
+
+class DeleteById implements \Magento\Framework\GraphQl\Query\ResolverInterface
+{
+    protected $repository;
+
+    public function __construct(ClassModelNameRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    {
+        if (empty($args['entity_id'])) {
+            throw new GraphQlInputException(__('field entity_id should not be empty'));
+        }
+        $status = $this->repository->deleteById($args['entity_id']);
+        return ['status' => $status];
+    }
+}
