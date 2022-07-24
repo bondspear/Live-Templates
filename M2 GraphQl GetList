@@ -1,0 +1,50 @@
+<?php
+namespace VendorName\ModuleName\Service\GraphQl;
+
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\GraphQl\Query\Resolver\Value;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use VendorName\ModuleName\Model\ResourceModel\ClassModelName\CollectionFactory;
+
+class GetList implements \Magento\Framework\GraphQl\Query\ResolverInterface
+{
+    protected $collectionFactory;
+
+    public function __construct(CollectionFactory $collectionFactory)
+    {
+        $this->collectionFactory = $collectionFactory;
+    }
+
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    {
+        $collection = $this->collectionFactory->create();
+
+        if($this->hasFilters($args)){
+            $this->addFilters($args, $collection);
+        }
+
+        return [
+            'items'       => $collection->getItems(),
+            'total_count' => $collection->count() ?? 1,
+            'page_info'   => [
+                'current_page' => $collection->getCurPage() ?? 1,
+                'page_size'    => $collection->getPageSize() ?? 1,
+                'total_pages'  => $collection->getLastPageNumber() ?? 1
+            ]
+        ];
+    }
+
+    public function addFilters($args, $collection)
+    {
+        foreach($args['input'] as $filterKey => $filterValue){
+            $collection->addFieldToFilter($filterKey,$filterValue);
+        }
+    }
+
+    public function hasFilters($args)
+    {
+        return !empty($args['input']);
+    }
+}

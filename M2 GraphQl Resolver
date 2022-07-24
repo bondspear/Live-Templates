@@ -1,6 +1,0 @@
-namespace VendorName\ModuleName\Service\GraphQl;
-
-class ClassName implements \Magento\Framework\GraphQl\Query\ResolverInterface
-{
-
-}
