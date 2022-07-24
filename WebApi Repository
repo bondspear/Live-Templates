@@ -1,5 +1,5 @@
 /** customize you model */
-namespace VendorName\ModuleName\WebApi;
+namespace VendorName\ModuleName\Model;
 
 use VendorName\ModuleName\Api\Data\ModelClassNameInterface;
 use VendorName\ModuleName\Model\ModelClassNameFactory as ModelFactory;
