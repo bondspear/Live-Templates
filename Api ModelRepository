@@ -1,169 +1,115 @@
-namespace VendorName\ModuleName\Model;
+/** customize you model */
+namespace VendorName\ModuleName\WebApi;
 
-use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Exception\StateException;
 use VendorName\ModuleName\Api\Data\ModelClassNameInterface;
-use VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterface;
-use VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterfaceFactory;
-use VendorName\ModuleName\Api\ModelClassNameRepositoryInterface;
+use VendorName\ModuleName\Model\ModelClassNameFactory as ModelFactory;
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName as Resource;
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName\CollectionFactory as CollectionFactory;
+/** customize you model */
 
-use VendorName\ModuleName\Model\ResourceModel\ModelClassName as ModelClassNameResource;
-use VendorName\ModuleName\Model\ResourceModel\ModelClassName\Collection as ModelClassNameCollection;
-use VendorName\ModuleName\Model\ResourceModel\ModelClassName\CollectionFactory as ModelClassNameCollectionFactory;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Api\Search\SearchResultFactory as BaseSearchResultFactory;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
-/**
- * Class ModelClassNameRepository
- * @package VendorName\ModuleName\Model
- */
-class ModelClassNameRepository implements ModelClassNameRepositoryInterface
+class Repository implements \VendorName\ModuleName\Api\Data\RepositoryInterface
 {
-    /**
-     * @var array
-     */
-    private $registry = [];
+    protected $modelFactory;
 
-    /**
-     * @var ModelClassNameResource
-     */
-    private $modelClassNameResource;
+    protected $collectionFactory;
 
-    /**
-     * @var ModelClassNameFactory
-     */
-    private $modelClassNameFactory;
+    protected $request;
 
-    /**
-     * @var ModelClassNameCollectionFactory
-     */
-    private $modelClassNameCollectionFactory;
+    protected $resource;
 
-    /**
-     * @var ModelClassNameSearchResultInterfaceFactory
-     */
-    private $modelClassNameSearchResultFactory;
+    protected $searchResultFactory;
 
-    /**
-     * @param ModelClassNameResource $modelClassNameResource
-     * @param ModelClassNameFactory $modelClassNameFactory
-     * @param ModelClassNameCollectionFactory $modelClassNameCollectionFactory
-     * @param ModelClassNameSearchResultInterfaceFactory $modelClassNameSearchResultFactory
-     */
+    protected $collectionProcessor;
+
     public function __construct(
-        ModelClassNameResource $modelClassNameResource,
-        ModelClassNameFactory $modelClassNameFactory,
-        ModelClassNameCollectionFactory $modelClassNameCollectionFactory,
-        ModelClassNameSearchResultInterfaceFactory $modelClassNameSearchResultFactory
-    ) {
-        $this->postResource = $modelClassNameResource;
-        $this->postFactory = $modelClassNameFactory;
-        $this->postCollectionFactory = $modelClassNameCollectionFactory;
-        $this->postSearchResultFactory = $modelClassNameSearchResultFactory;
+        Resource $resource,
+        ModelFactory $modelFactory,
+        CollectionFactory $collectionFactory,
+        RequestInterface $request,
+        BaseSearchResultFactory $searchResultFactory,
+        CollectionProcessorInterface $collectionProcessor
+    )
+    {
+        $this->request             = $request;
+        $this->resource            = $resource;
+        $this->modelFactory        = $modelFactory;
+        $this->collectionFactory   = $collectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->searchResultFactory = $searchResultFactory;
     }
 
-    /**
-     * @param int $id
-     * @return ModelClassNameInterface
-     * @throws NoSuchEntityException
-     */
-    public function get(int $id)
+
+
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria)
     {
-        if (!array_key_exists($id, $this->registry)) {
-            $modelClassName = $this->postFactory->create();
-            $this->postResource->load($modelClassName, $id);
-            if (!$modelClassName->getId()) {
-                throw new NoSuchEntityException(__('Requested post does not exist'));
-            }
-            $this->registry[$id] = $modelClassName;
-        }
+        $collection = $this->collectionFactory->create();
 
-        return $this->registry[$id];
-    }
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
-    /**
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \VendorName\ModuleName\Api\Data\ModelClassNameSearchResultInterface
-     */
-    public function getList(SearchCriteriaInterface $searchCriteria)
-    {
-        /** @var ModelClassNameCollection $collection */
-        $collection = $this->postCollectionFactory->create();
-        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
-            foreach ($filterGroup->getFilters() as $filter) {
-                $condition = $filter->getConditionType() ? $filter->getConditionType() : 'eq';
-                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
-            }
-        }
-
-        /** @var ModelClassNameSearchResultInterface $searchResult */
-        $searchResult = $this->postSearchResultFactory->create();
+        $searchResult = $this->searchResultFactory->create();
         $searchResult->setSearchCriteria($searchCriteria);
         $searchResult->setItems($collection->getItems());
         $searchResult->setTotalCount($collection->getSize());
         return $searchResult;
     }
 
-    /**
-     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
-     * @return ModelClassNameInterface
-     * @throws StateException
-     */
-    public function save(ModelClassNameInterface $modelClassName)
+    public function save(ModelClassNameInterface $model)
     {
         try {
-            /** @var ModelClassName $modelClassName */
-            $this->postResource->save($modelClassName);
-            $this->registry[$modelClassName->getId()] = $this->get($modelClassName->getId());
-        } catch (\Exception $exception) {
-            throw new StateException(__('Unable to save post #%1', $modelClassName->getId()));
+            if(!$model->getId()){
+                /** unset (0) id to save new entity */
+                $model->setId(null);
+            }else{
+                /** catch exception if entity not exist */
+                $this->getById($model->getId());
+            }
+            $this->resource->save($model);
+        } catch (LocalizedException $exception) {
+            throw new CouldNotSaveException(
+                __('Could not save the entity, reason: %1', $exception->getMessage()),
+                $exception
+            );
+        } catch (\Throwable $exception) {
+            throw new CouldNotSaveException(
+                __('Could not save the model, reason:  %1', __('Something went wrong while saving the model.')),
+                $exception
+            );
         }
-        return $this->registry[$modelClassName->getId()];
-    }
-
-    /**
-     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
-     * @return bool
-     * @throws StateException
-     */
-    public function delete(ModelClassNameInterface $modelClassName)
-    {
-        try {
-            /** @var ModelClassName $modelClassName */
-            $this->postResource->delete($modelClassName);
-            unset($this->registry[$modelClassName->getId()]);
-        } catch (\Exception $e) {
-            throw new StateException(__('Unable to remove post #%1', $modelClassName->getId()));
-        }
-
         return true;
     }
 
-    /**
-     * @param int $id
-     * @return bool
-     */
-    public function deleteById(int $id)
+    public function delete(ModelClassNameInterface $model)
     {
-        return $this->delete($this->get($id));
-    }
-    
-     /**
-     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $modelClassName
-     * @param int $id
-     * @return \VendorName\ModuleName\Api\Data\ModelClassNameInterface
-     */
-    public function updateById(ModelClassNameInterface $modelClassName, int $id)
-    {
-        if (!array_key_exists($id, $this->registry)) {
-            $modelClassNameModel = $this->modelClassNameFactory->create();
-            $this->modelClassNameResource->load($modelClassNameModel, $id);
-            if (!$modelClassNameModel->getId()) {
-                throw new NoSuchEntityException(__('Requested modelClassName does not exist'));
-            }
-            $this->modelClassNameResource->save($modelClassName);
-            $this->registry[$id] = $modelClassName;
+        try {
+            $this->resource->delete($model);
+        } catch (\Exception $exception) {
+            throw new CouldNotDeleteException(
+                __('Could not delete model, reason:  %1', $exception->getMessage())
+            );
         }
+        return true;
+    }
 
-        return $this->registry[$id];
+    public function deleteById($id)
+    {
+        return $this->delete($this->getById($id));
+    }
+
+    public function getById($id)
+    {
+        $modelFactory = $this->modelFactory->create();
+        $modelFactory->load($id);
+        if (!$modelFactory->getId()) {
+            throw new NoSuchEntityException(__('Could not get model , reason: model ' . $id . ' doesn\'t exist.', $modelFactory));
+        }
+        return $modelFactory;
     }
 }
