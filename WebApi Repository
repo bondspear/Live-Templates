@@ -15,7 +15,7 @@ use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class Repository implements \VendorName\ModuleName\Api\Data\RepositoryInterface
+class ModelClassNameRepository implements \VendorName\ModuleName\Api\Data\ModelClassNameRepositoryInterface
 {
     protected $modelFactory;
 
