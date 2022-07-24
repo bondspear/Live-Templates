@@ -1,49 +1,43 @@
-namespace VendorName\ModuleName\Api;
+<?php
 
-use Magento\Framework\Api\SearchCriteriaInterface;
-use VendorName\ModuleName\Api\Data\ClassModelNametInterface;
+namespace VendorName\ModuleName\Api\Data;
 
-/**
- * Interface ClassModelNameRepositoryInterface
- * @package VendorName\Api
- * @api
- */
-interface ClassModelNameRepositoryInterface
+
+interface RepositoryInterface
 {
-    /**
-     * @param int $id
-     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
-     */
-    public function get(int $id);
 
     /**
      * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return \VendorName\ModuleName\Api\Data\ClassModelNameSearchResultInterface
+     * @return \VendorName\ModuleName\Api\Data\SearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria);
 
     /**
-     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
-     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $model
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function save(ClassModelNameInterface $classModelName);
+    public function save(\VendorName\ModuleName\Api\Data\ModelClassNameInterface $model);
 
     /**
-     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
-     * @return bool
+     * @param \VendorName\ModuleName\Api\Data\ModelClassNameInterface $model
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function delete(ClassModelNameInterface $classModelName);
+    public function delete(\VendorName\ModuleName\Api\Data\ModelClassNameInterface $model);
 
     /**
      * @param int $id
-     * @return bool
+     * @return bool true on success
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function deleteById(int $id);
-    
+    public function deleteById($id);
+
     /**
-     * @param \VendorName\ModuleName\Api\Data\ClassModelNameInterface $classModelName
-     * @param int $id
-     * @return \VendorName\ModuleName\Api\Data\ClassModelNameInterface
+     * @param  int $id
+     * @return \VendorName\ModuleName\Api\Data\RepositoryInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function updateById(ClassModelNameInterface $classModelName, int $id);
+    public function getById($id);
 }
