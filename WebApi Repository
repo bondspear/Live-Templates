@@ -2,9 +2,9 @@
 namespace VendorName\ModuleName\Model;
 
 use VendorName\ModuleName\Api\Data\ModelClassNameInterface;
-use VendorName\ModuleName\Model\ModelClassNameFactory as ModelFactory;
+use VendorName\ModuleName\Model\ModelClassNameFactory;
 use VendorName\ModuleName\Model\ResourceModel\ModelClassName as Resource;
-use VendorName\ModuleName\Model\ResourceModel\ModelClassName\CollectionFactory as CollectionFactory;
+use VendorName\ModuleName\Model\ResourceModel\ModelClassName\CollectionFactory;
 /** customize you model */
 
 use Magento\Framework\App\RequestInterface;
@@ -31,7 +31,7 @@ class ModelClassNameRepository implements \VendorName\ModuleName\Api\Data\ModelC
 
     public function __construct(
         Resource $resource,
-        ModelFactory $modelFactory,
+        ModelClassName $modelFactory,
         CollectionFactory $collectionFactory,
         RequestInterface $request,
         BaseSearchResultFactory $searchResultFactory,
