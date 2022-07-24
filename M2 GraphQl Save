@@ -1,0 +1,49 @@
+
+namespace VendorName\ModuleName\Service\GraphQl;
+
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
+use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\GraphQl\Query\Resolver\Value;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use VendorName\ModuleName\Api\Data\ClassModelInterface;
+use VendorName\ModuleName\Model\ClassModelRepository;
+
+class Save implements \Magento\Framework\GraphQl\Query\ResolverInterface
+{
+    protected $model;
+
+    protected $repository;
+
+    public function __construct(
+        ClassModelInterface  $model,
+        ClassModelRepository $repository
+    )
+    {
+        $this->model      = $gimnastic;
+        $this->repository = $gimnasticRepository;
+    }
+
+    /**
+     * @param Field $field
+     * @param ContextInterface $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array
+     * @throws GraphQlInputException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    {
+        if (empty($args['input']['lesson'])) {
+            throw new GraphQlInputException(__('field lesson should not be empty'));
+        }
+        if (empty($args['input']['time'])) {
+            throw new GraphQlInputException(__('field time should not be empty'));
+        }
+        $model =  $this->model->setId($args['input']['entity_id'])->setLesson($args['input']['lesson'])->setTime($args['input']['time']);
+        $status = $this->repository->save($model);
+        return ['status' => $status];
+    }
+}
