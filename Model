@@ -40,7 +40,7 @@ class YouModelName extends AbstractModel implements YouModelNameInterface
      */
     public function setId($id)
     {
-        $this->setData(ModelClassNameInterface::ID, $id);
+        $this->setData(YouModelNameInterface::ID, $id);
         return $this;
     }
 }
