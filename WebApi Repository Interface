@@ -34,7 +34,7 @@ interface ModelClassNameRepositoryInterface
 
     /**
      * @param  int $id
-     * @return \VendorName\ModuleName\Api\Data\RepositoryInterface
+     * @return \VendorName\ModuleName\Api\Data\ModelClassNameRepositoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getById($id);
