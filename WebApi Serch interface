@@ -1,7 +1,7 @@
 namespace VendorName\ModuleName\Api\Data;
 
 
-interface ModelClassNameSearchResultInterface extends  \Magento\Framework\Api\SearchResultsInterface
+interface ModelClassNameSearchResultsInterface extends  \Magento\Framework\Api\SearchResultsInterface
 {
     /**
      * @return \VendorName\ModuleName\Api\Data\ModelClassNameInterface[]
