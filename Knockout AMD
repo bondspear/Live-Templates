@@ -1,0 +1,22 @@
+define([
+    'jquery',
+    'uiComponent',
+    'ko'
+], function($, Component, ko){
+    'use strict';
+
+    var self;
+    return Component.extend({
+        defaults: {},
+        initialize: function () {
+            self = this;
+            this._super();
+        }
+        
+        
+        
+        
+        
+        
+    });
+});
