@@ -1,8 +1,20 @@
 /**
- * call observable entity like function! variable()
- * 
+ * call ko.observable() subject like function!
+ *
  * get value  variable()
  * set value  variable(value)
+ * 
+ * 
+ * call variable.subscribe(function(value){ //some code with value }) by initialize AMD
+ * 
+ * value is required!
+ * uses when need observe entities like (ko.observable()) 
+ * 
+ * 
+ * 
+ * call ko.computed(function(){ //some code with normal and ko.observable() entities },this)
+ * 
+ * when needed change some normal and ko.observable() entities
  */
 define([
     'jquery',
