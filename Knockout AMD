@@ -1,5 +1,8 @@
 /**
  * call observable entity like function! variable()
+ * 
+ * get value  variable()
+ * set value  variable(value)
  */
 define([
     'jquery',
