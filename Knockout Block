@@ -1,0 +1,8 @@
+    protected $jsLayout = [
+        "components" => [
+            "example" => [
+                "component" => "Bondspear_Ko/js/example/example",
+                "template"  => "Bondspear_Ko/example/example"
+            ]
+        ]
+    ];
