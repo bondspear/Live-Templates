@@ -14,7 +14,7 @@
  * 
  * call ko.computed(function(){ //some code with normal and ko.observable() entities },this)
  * 
- * when needed change some normal and ko.observable() entities
+ * uses when needed change some normal and ko.observable() entities
  */
 define([
     'jquery',
