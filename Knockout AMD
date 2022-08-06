@@ -1,3 +1,6 @@
+/**
+ * call observable entity like function! variable()
+ */
 define([
     'jquery',
     'uiComponent',
