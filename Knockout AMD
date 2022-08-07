@@ -1,20 +1,26 @@
-/**
+/*****************************************************************************
  * call ko.observable() subject like function!
  *
  * get value  variable()
  * set value  variable(value)
- * 
- * 
- * call variable.subscribe(function(value){ //some code with value }) by initialize AMD
- * 
+ *
+ *****************************************************************************
+ * call
+ * self.notificator = self.variable.subscribe(function(value){ //some code });
+ * by initialize AMD
+ *
  * value is required!
- * uses when need observe entities like (ko.observable()) 
- * 
- * 
- * 
+ * uses when need subscribe to observe entities like (ko.observable())
+ *****************************************************************************
+ * call
+ *
+ * self.notificator.dispose()  to unsubscribe  self.variable
+ * ***************************************************************************
+ *
  * call ko.computed(function(){ //some code with normal and ko.observable() entities },this)
- * 
- * uses when needed change some normal and ko.observable() entities
+ *
+ * when needed change some normal and ko.observable() entities
+ * ****************************************************************************
  */
 define([
     'jquery',
