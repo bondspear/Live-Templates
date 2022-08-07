@@ -1,8 +1,14 @@
-    protected $jsLayout = [
+  protected $jsLayout = [
         "components" => [
             "example" => [
-                "component" => "Bondspear_Ko/js/example/example",
-                "template"  => "Bondspear_Ko/example/example"
+                "component_name" => "VendorName_ModuleName/js/component_name",
+                "template"       =>  "VendorName_ModuleName/template_name"
+                "children"       => [
+                    "component_name"  => [
+                        "component"   => "VendorName_ModuleName/component_name",
+                        "template"    =>  "VendorName_ModuleName/template_name"
+                    ]
+                ]
             ]
         ]
     ];
