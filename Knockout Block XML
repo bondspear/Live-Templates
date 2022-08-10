@@ -1,25 +1,33 @@
-<block class="VendorNmae\ModuleName\Block\Data">
-              <arguments>
-                  <argument name="jsLayout" xsi:type="array">
-                      <item name="components" xsi:type="array">
-                          <item name="customer-list" xsi:type="array">
-                              <item name="component" xsi:type="string">VendorNmae_ModuleName/js/component_name</item>
-                              <item name="config" xsi:type="array">
-                                  <item name="template" xsi:type="string">VendorNmae_ModuleName/template_name</item>
-                              </item>
-                              
-                              <item name="children" xsi:type="array">
-                                  <item name="child_a" xsi:type="array">
-                                      <item name="sortOrder" xsi:type="string">2</item>
-                                      <item name="component" xsi:type="string">VendorNmae_ModuleName/js/component_name</item>
-                                      <item name="config" xsi:type="array">
-                                          <item name="template" xsi:type="string">VendorNmae_ModuleName/template_name</item>
-                                      </item>
-                                  </item>
-                              </item>
-                              
-                          </item>
-                      </item>
-                  </argument>
-              </arguments>
-          </block>
+<arguments>
+    <argument name="jsLayout" xsi:type="array">
+        <item name="components" xsi:type="array">
+
+
+            <item name="component-name" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">component-name</item>
+                <item name="component" xsi:type="string">VendorName_ModuleName/js/component-name</item>
+                <item name="template" xsi:type="string">VendorName_ModuleName/component-name</item>
+                <item name="di" xsi:type="string">component-di-name</item>
+                <!-- COMPONENT HIERARCHY  -->
+                <item name="children" xsi:type="array">
+                    <item name="children-component-name" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">children-component-name</item>
+                        <item name="component" xsi:type="string">VendorName_ModuleName/js/children-component-name</item>
+                        <item name="sortOrder" xsi:type="number">2</item>
+                        <item name="template" xsi:type="string">VendorName_ModuleName/children-component-name</item>
+                        <item name="displayArea" xsi:type="string">che</item>
+                    </item>
+                </item>
+                <!-- COMPONENT HIERARCHY  -->
+            </item>
+
+
+            <!-- COMPONENT DI  -->
+            <item name="component-di-name" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">component-di-name</item>
+                <item name="component" xsi:type="string">VendorName_ModuleName/js/component-di-name</item>
+            </item>
+            <!-- COMPONENT DI  -->
+        </item>
+    </argument>
+</arguments>
