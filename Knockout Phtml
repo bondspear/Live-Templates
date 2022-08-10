@@ -1,9 +1,9 @@
-<div id="example" data-bind="scope:'COMPONENT_NAME'">
- <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+<div data-bind="scope:'SCOPE'">
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
     <!-- ko template: getTemplate() --><!-- /ko -->
     <script type="text/x-magento-init">
             {
-                "#example": {
+                "*": {
                     "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
                 }
             }
