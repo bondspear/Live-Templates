@@ -8,6 +8,7 @@
                 <item name="component" xsi:type="string">VendorName_ModuleName/js/component-name</item>
                 <item name="template" xsi:type="string">VendorName_ModuleName/component-name</item>
                 <item name="di" xsi:type="string">component-di-name</item>
+                <item name="variable" xsi:type="string">my string</item>
                 <!-- COMPONENT HIERARCHY  -->
                 <item name="children" xsi:type="array">
                     <item name="children-component-name" xsi:type="array">
