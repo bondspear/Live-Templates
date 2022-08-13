@@ -1,10 +1,27 @@
-var config = {
-    config: {
-        mixins: {
-            'VendorName_ModuleName/js/somefile' : 
-                {
-                    'VendorName_ModuleName/js/somefile-mixin':true
-                }
-        }
-    },
-}
+define(
+     [
+         'jquery',
+         'underscore',
+         'ko',
+         'uiComponent',
+         'uiRegistry',
+     ],
+     function (
+         $,
+         _,
+         ko,
+         Component,
+         registry,
+     ) {
+         'use strict';
+
+        var mixin = {
+             method1: function() { /* my code */ },
+        };
+
+        return function (target) {
+            return target.extend(mixin);
+        };
+
+    }
+);
