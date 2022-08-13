@@ -25,8 +25,9 @@
 define([
     'jquery',
     'uiComponent',
-    'ko'
-], function($, Component, ko){
+    'ko',
+    'mage/translate'
+], function($, Component, ko, $t){
     'use strict';
 
     var self;
