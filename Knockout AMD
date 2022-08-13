@@ -24,10 +24,12 @@
  */
 define([
     'jquery',
+    'underscore',
     'uiComponent',
     'ko',
-    'mage/translate'
-], function($, Component, ko, $t){
+    'mage/translate',
+    'mage/url'
+], function($, _, Component, ko, $t, urlBuilder){
     'use strict';
 
     var self;
