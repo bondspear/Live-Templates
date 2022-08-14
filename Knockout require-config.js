@@ -3,7 +3,7 @@
  * @description: after any changes!!
  *
  * 1) delete:  require-config.js  (into pub/static)
- * 2) use:     php bin/magento c:f && php bin/magento s:s:d -f && chmod -R 777 *
+ * 2) use:     php bin/magento c:f && php bin/magento s:s:d -f
  */
 
 var config = {
