@@ -1,8 +1,4 @@
-/**
- *
- * @description: php bin/magento c:f && php bin/magento s:s:d -f (locale)
- */
-
+/** @description:   php bin/magento c:f && php bin/magento s:s:d -f (locale)   */
 var config = {
         map: {
             '*': {
