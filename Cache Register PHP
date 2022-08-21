@@ -1,0 +1,25 @@
+namespace VendorName\ModuleName\Model\Cache\Type;
+
+use Magento\Framework\App\Cache\Type\FrontendPool;
+use Magento\Framework\Cache\Frontend\Decorator\TagScope;
+
+class CacheTypeName extends TagScope
+{
+    /**
+     * Cache type code unique among all cache types
+     */
+    const TYPE_IDENTIFIER = '%cache_type_name%';
+
+    /**
+     * The tag name that limits the cache cleaning scope within a particular tag
+     */
+    const CACHE_TAG = '%CACHE_TYPE_NAME%';
+
+    public function __construct(FrontendPool $cacheFrontendPool)
+    {
+        parent::__construct(
+            $cacheFrontendPool->get(self::TYPE_IDENTIFIER),
+            self::CACHE_TAG
+        );
+    }
+}
