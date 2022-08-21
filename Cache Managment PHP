@@ -1,0 +1,49 @@
+namespace VendorName\ModuleName\Service\Cache;
+
+use Magento\Framework\App\Cache\Type\FrontendPool;
+use Magento\Framework\Cache\Frontend\Decorator\TagScope;
+
+class CacheManagment extends TagScope
+{
+    protected $serializer;
+    protected $cache;
+    protected $typeList;
+
+    public function __construct(
+        \Magento\Framework\App\Cache\TypeListInterface $typeList,
+        \Magento\Framework\Serialize\SerializerInterface $serializer,
+        \Magento\Framework\Config\CacheInterface $cache
+    ){
+        $this->cache = $cache;
+        $this->typeList = $typeList;
+        $this->serializer = $serializer;
+    }
+
+
+    public function get(){
+        $cacheKey  = \VendorName\ModuleName\Model\Cache\Type\CacheTypeName::TYPE_IDENTIFIER;
+        
+        $this->serializer->unserialize($this->cache->load($cacheKey));
+    }
+    
+    public function delete(){
+        $cacheKey  = \VendorName\ModuleName\Model\Cache\Type\CacheTypeName::TYPE_IDENTIFIER;
+        
+        $this->typeList->cleanType($cacheKey);
+    }
+    
+    public function save(){
+        $data = 'bla bla bla';
+    
+    
+        $cacheKey  = \VendorName\ModuleName\Model\Cache\Type\CacheTypeName::TYPE_IDENTIFIER;
+        $cacheTag  = \VendorName\ModuleName\Model\Cache\Type\CacheTypeName::CACHE_TAG;
+    
+        $this->cache->save(
+                $this->serializer->serialize($data),
+                $cacheKey,
+                [$cacheTag],
+                86400
+            );
+    }
+}
