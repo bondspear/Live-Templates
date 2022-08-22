@@ -26,13 +26,13 @@ class CacheManagment extends TagScope
         $this->serializer->unserialize($this->cache->load($cacheKey));
     }
     
-    public function delete(){
+    public function unset(){
         $cacheKey  = \VendorName\ModuleName\Model\Cache\Type\CacheTypeName::TYPE_IDENTIFIER;
         
         $this->typeList->cleanType($cacheKey);
     }
     
-    public function save(){
+    public function set(){
         $data = 'bla bla bla';
     
     
