@@ -25,5 +25,5 @@
  * 
  * 
  *   ПРИМЕР
- *   $result = preg_grep('/^c.*c$/',['cdfgdgfc']);
+ *   $result = preg_grep('/^c.*c$/',['cdfgdgfc']);  //cdfgdgfc
  */
