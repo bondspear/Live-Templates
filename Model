@@ -6,6 +6,8 @@ use Magento\Framework\Model\AbstractModel;
 class YouModelName extends AbstractModel implements YouModelNameInterface
 {
 
+    const ENTITY = '';
+
     /**
      * @inheritdoc
      */
