@@ -1,0 +1,122 @@
+namespace VendorName\ModuleName\Block\Adminhtml\Customer\Edit;
+
+use Magento\Ui\Component\Layout\Tabs\TabInterface;
+use Magento\Customer\Controller\RegistryConstants;
+use Magento\Backend\Block\Widget\Form\Generic;
+
+
+class LoyaltyTab extends Generic  implements TabInterface
+{
+    /**
+     * Core registry
+     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $_coreRegistry;
+
+
+    public function __construct(
+        \Magento\Backend\Block\Template\Context $context,
+        \Magento\Store\Model\System\Store $systemStore,
+        \Magento\Framework\Registry $registry,
+        Collection $collection,
+        array $data = []
+    ) {
+        parent::__construct($context, $registry, $formFactory, $data);
+        $this->_coreRegistry = $registry;
+        $this->_collection = $collection;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCustomerId()
+    {
+        return $this->_coreRegistry->registry(RegistryConstants::CURRENT_CUSTOMER_ID);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _toHtml()
+    {
+        $form     = $this->_formFactory->create();
+        $fieldset = $form->addFieldset('<custom_name>', ['legend' => __('<custom_name>')]);
+
+        $fieldset->addField(
+            'loyalty_program_id',
+            'select',
+            [
+                'name'           => '<custom_field>',
+                'label'          => __('<custom_field>'),
+                'note'           => __(''),
+                'required'       => false,
+                'disabled'       => false,
+                'options'        => [],
+                'data-form-part' => $this->getData('target_form'),
+            ]
+        );
+
+        $this->setForm($form);
+        return parent::_toHtml();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function canShowTab()
+    {
+        return true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTabLabel()
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function getTabTitle()
+    {
+        return __('<custom_field>');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function isHidden()
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTabClass()
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTabUrl()
+    {
+        return '';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isAjaxLoaded()
+    {
+        return false;
+    }
+}
