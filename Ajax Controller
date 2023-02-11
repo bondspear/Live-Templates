@@ -18,10 +18,11 @@ class Index extends Action
 
     public function execute()
     {
-        $data = $this->json->unserialize($this->getRequest()->getContent());
+        $data = [];
+        $inputData  = $this->json->unserialize($this->getRequest()->getContent());
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         $resultJson->setHeader('Content-type', 'application/json', true);
-        $resultJson->setData('{}');
+        $resultJson->setData($this->json->serialize($data));
         return $resultJson;
     }
 }
