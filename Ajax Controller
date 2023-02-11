@@ -1,0 +1,26 @@
+namespace VendorName\ModuleName\Controller\Index;
+
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\View\Result\PageFactory;
+
+class Index extends Action
+{
+    protected $resultPageFactory;
+
+    public function __construct(Context $context, PageFactory $resultPageFactory)
+    {
+        $this->resultPageFactory = $resultPageFactory;
+        return parent::__construct($context);
+    }
+
+    public function execute()
+    {
+        $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
+        $resultJson->setHeader('Content-type', 'application/json', true);
+        $resultJson->setData('{}');
+        return $resultJson;
+    }
+}
