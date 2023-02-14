@@ -13,7 +13,7 @@ class YouModelName extends AbstractModel implements YouModelNameInterface
      */
     protected function _construct()
     {
-        $this->_init('VendorName\ModuleName\Model\ResourceModel\YouModelName');
+        $this->_init(\VendorName\ModuleName\Model\ResourceModel\YouModelName::class);
     }
 
     public function getIdentities()
